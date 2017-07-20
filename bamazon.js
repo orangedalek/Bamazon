@@ -91,7 +91,7 @@ function shop(){
 					// subtract items ordered from out inventory
 					var newStock = results[0].stock_quantity - quantity;
 					var orderTotal = results[0].price * quantity;
-					connection.query("UPDATE store SET stock_quantity = ? WHERE item_id = ?", [newStock, answer.item_id], function(err, results){
+					connection.query("UPDATE store SET stock_quantity = ? WHERE item_id = ?", [newStock, answer.itemselect], function(err, results){
 						if (err) throw err;
 						console.log("Order placed!");
 						console.log("Your total is $ " + orderTotal);
