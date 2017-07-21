@@ -25,10 +25,13 @@ function displayStore(){
 // get store info from mysql
 	connection.query("SELECT * FROM store", function(err, results){
 		if (err) throw err;
+		items = [];
 		// loop through items in store table and display them to console
 		for (var i = 0; i < results.length; i++) {
-			console.table([
-			{
+
+
+			var store_item ={
+
 				item_id: results[i].item_id,
 				product_name: results[i].product_name,
 				department_name: results[i].department_name,
@@ -36,12 +39,15 @@ function displayStore(){
 				stock_quantity: results[i].stock_quantity
 			}
 
+		items.push(store_item);
 
 
-				])
+				
 		}
+		// console.log(items);
+		console.table(["Item ID", "Product Name", "Department Name", "Price", "Quantity in Stock"], items);
 	})
-	shop();
+	// shop();
 
 
 }
@@ -95,7 +101,7 @@ function shop(){
 						if (err) throw err;
 						console.log("Order placed!");
 						console.log("Your total is $ " + orderTotal);
-						shop();
+						displayStore();
 
 					});
 				}
