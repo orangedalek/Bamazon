@@ -3,6 +3,7 @@ var consoleT = require("console.table");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var userCommand = [];
+require('events').EventEmitter.prototype._maxListeners = 100;
 
 // connect to mysql
 
@@ -65,7 +66,7 @@ function displayStore(){
 // get store info from mysql
 	connection.query("SELECT * FROM store", function(err, results){
 		if (err) throw err;
-		items = [];
+		var items = [];
 		// loop through items in store table and push them to items array for easier formatting
 		for (var i = 0; i < results.length; i++) {
 
@@ -111,9 +112,9 @@ function viewLow(){
 		lowItems.push(lowItem);
 
 		 }
+		}
 		 console.table(["\n"], lowItems);
 		 menu();
-		}
 	})
 }
 
@@ -154,15 +155,15 @@ function addInv(){
 				if (err) throw err;
 				if(results.length > 0){
 					currentStock = parseInt(results[0].stock_quantity);
-					console.log("Current Stock " + currentStock);
+					// console.log("Current Stock " + currentStock);
 				}
 
 			connection.query("UPDATE store SET stock_quantity = ? WHERE item_id = ?", [currentStock + parseInt(answer.addQuantity), answer.addItem], function(err, results){
 				if (err) throw err;
 				console.log("Stock updated!");
 			} )
-			displayStore();
 			});
+			menu();
 		})
 	
 }
