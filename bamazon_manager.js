@@ -167,6 +167,56 @@ function addInv(){
 	
 }
 
+function addItems(){
+	inquirer.prompt([
+	{
+		name: "addNewItem",
+		type: "input",
+		message: "What is the name of the item to be added?",
+	},
+	{
+		name: "addNewDepartment",
+		type: "input",
+		message: "What is the department for the item to be added?"
+	},
+	{
+		name: "addNewPrice",
+		type: "input",
+		message: "What is the price of the item to be added?"
+	},
+	{
+		name: "addNewInventory",
+		type: "input",
+		message: "How many would you like to add to stock?",
+		validate: function(value){
+			if(isNaN(value) == false){
+				return true;
+			}else{
+				return false;
+				}
+		}
+	}
+
+
+		]).then(function(answers){
+			var query = "INSERT into store SET ?";
+			var values = {
+				product_name: answers.addNewItem,
+				department_name: answers.addNewDepartment,
+				price: answers.addNewPrice,
+				stock_quantity: answers.addNewInventory
+			}
+
+			connection.query(query, values, function(err, results){
+				if (err) throw err;
+				// console.log(results);
+
+
+			})
+			displayStore();
+		})
+}
+
 
 
 
