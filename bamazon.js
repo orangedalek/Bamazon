@@ -45,9 +45,9 @@ function displayStore(){
 				
 		}
 		// console.log(items);
-		console.table(["Item ID", "Product Name", "Department Name", "Price", "Quantity in Stock"], items);
+		console.table(["\n"], items);
 	})
-	// shop();
+	shop();
 
 
 }
