@@ -88,7 +88,31 @@ function displayStore(){
 		console.table(["\n"], items);
 		menu();
 	})
-	
+}
 
 
+// function to view items with low inventory
+function viewLow(){
+	connection.query("SELECT * FROM store", function(err, results){
+		if (err) throw err;
+		lowItems = [];
+		for (var i = 0; i < results.length; i++) {
+		 if(results[i].stock_quantity < 5){
+
+		 		var lowItem ={
+
+				item_id: results[i].item_id,
+				product_name: results[i].product_name,
+				department_name: results[i].department_name,
+				price: results[i].price,
+				stock_quantity: results[i].stock_quantity
+			}
+
+		lowItems.push(lowItem);
+
+		 }
+		 console.table(["\n"], lowItems);
+		 menu();
+		}
+	})
 }
