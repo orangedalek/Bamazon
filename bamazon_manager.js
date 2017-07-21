@@ -116,3 +116,77 @@ function viewLow(){
 		}
 	})
 }
+
+function addInv(){
+
+
+	inquirer.prompt([
+		{
+			name: "addItem",
+			type: "input",
+			message: "Enter the item id to add stock.",
+			validate: function(value){
+				if(isNaN(value) == false){
+					return true;
+				}else{
+					return false;
+					}
+			}
+		},
+		{
+			name: "addQuantity",
+			type: "input",
+			message: "How many would you like to add?",
+			validate: function(value){
+				if(isNaN(value) == false){
+					return true;
+				}else{
+					return false;
+					}
+			}
+		}
+		
+		]).then(function(answer){
+			// get old values
+			var currentStock;
+
+			connection.query("SELECT * FROM store WHERE item_id = ?", answer.addItem, function(err, results){
+				if (err) throw err;
+				if(results.length > 0){
+					currentStock = parseInt(results[0].stock_quantity);
+					console.log("Current Stock " + currentStock);
+				}
+
+			connection.query("UPDATE store SET stock_quantity = ? WHERE item_id = ?", [currentStock + parseInt(answer.addQuantity), answer.addItem], function(err, results){
+				if (err) throw err;
+				console.log("Stock updated!");
+			} )
+			displayStore();
+			});
+		})
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
