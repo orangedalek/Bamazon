@@ -26,7 +26,7 @@ function displayStore(){
 	connection.query("SELECT * FROM store", function(err, results){
 		if (err) throw err;
 		items = [];
-		// loop through items in store table and display them to console
+		// loop through items in store table and push them to items array for easier formatting
 		for (var i = 0; i < results.length; i++) {
 
 
@@ -44,7 +44,7 @@ function displayStore(){
 
 				
 		}
-		// console.log(items);
+		//display formatted table after line break
 		console.table(["\n"], items);
 	})
 	shop();
